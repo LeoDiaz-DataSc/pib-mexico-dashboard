@@ -1,0 +1,30 @@
+# MySQL
+*.log
+*.pid
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# Node (for future API)
+node_modules/
+dist/
+build/
+
+# Docker
+docker-compose.override.yml
+
+# Backup files
+*.bak
+*.sql.bak
