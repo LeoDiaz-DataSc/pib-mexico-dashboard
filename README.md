@@ -153,7 +153,7 @@ This project is licensed under the MIT License. See [LICENSE](./LICENSE) for det
 
 ---
 
-**Developed by [Leonardo Diaz](https://github.com/LeoDiaz-DataSc)**
+**Developed by [Diego Leobardo Diaz Hernandez](https://github.com/LeoDiaz-DataSc)**
 
 ---
 
@@ -293,4 +293,4 @@ mysql -u root -p pib_mexico_db < consultas_pib_mexico_db.sql
 
 ---
 
-**Desarrollado por [Leonardo Diaz](https://github.com/LeoDiaz-DataSc)**
+**Desarrollado por [Diego Leobardo Diaz Hernandez](https://github.com/LeoDiaz-DataSc)**
