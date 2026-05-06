@@ -18,6 +18,13 @@ app.get('/api/health', (req, res) => {
 app.use('/api/sectors', require('./routes/sectors'));
 app.use('/api/series', require('./routes/series'));
 app.use('/api/economic-data', require('./routes/economic-data'));
+app.use('/api/export', require('./routes/export'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/admin', require('./routes/admin'));
+app.use('/api/report', require('./routes/report'));
+
+// Iniciar servicios en segundo plano (ETL Cron)
+require('./services/etl_inegi');
 
 // Error handling middleware
 app.use((err, req, res, next) => {

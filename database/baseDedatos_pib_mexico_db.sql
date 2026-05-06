@@ -87,6 +87,7 @@ CREATE TABLE datos_economicos (
     valor_tendencia DECIMAL(15,3),
     valor_irregular DECIMAL(15,3),
     fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    fecha_liberacion TIMESTAMP NULL, -- Modulo Embargo
     fuente VARCHAR(255),
     
     FOREIGN KEY (id_serie) REFERENCES series_economicas(id_serie) ON DELETE CASCADE,
@@ -104,6 +105,8 @@ CREATE TABLE usuarios (
     nombre_usuario VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     contraseña_hash VARCHAR(255) NOT NULL,
+    mfa_secret VARCHAR(100), -- ISO 27001 MFA
+    mfa_enabled BOOLEAN DEFAULT FALSE,
     nombre_completo VARCHAR(255),
     institucion VARCHAR(255),
     tipo_usuario ENUM('ADMIN', 'ANALISTA', 'LECTOR', 'CONSULTA') DEFAULT 'LECTOR',
@@ -230,7 +233,8 @@ FROM datos_economicos de
 JOIN periodos_tiempo p ON de.id_periodo = p.id_periodo
 JOIN series_economicas s ON de.id_serie = s.id_serie
 LEFT JOIN subsectores su ON de.id_subsector = su.id_subsector
-WHERE s.codigo_serie LIKE '%PIB%' OR s.nombre LIKE '%Producto interno bruto%'
+WHERE (s.codigo_serie LIKE '%PIB%' OR s.nombre LIKE '%Producto interno bruto%')
+  AND (de.fecha_liberacion <= CURRENT_TIMESTAMP OR de.fecha_liberacion IS NULL)
 ORDER BY p.año DESC, p.trimestre DESC;
 
 -- Vista para series por sector económico

@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
             JOIN periodos_tiempo p ON de.id_periodo = p.id_periodo
             JOIN series_economicas s ON de.id_serie = s.id_serie
             LEFT JOIN subsectores su ON de.id_subsector = su.id_subsector
-            WHERE 1=1
+            WHERE (de.fecha_liberacion <= NOW() OR de.fecha_liberacion IS NULL)
         `;
         
         const params = [];
