@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
+const { verifyToken, checkRole } = require('../middleware/auth');
 
 /**
  * GET /api/admin/logs
  * Devuelve la bitácora de accesos para auditoría ISO 27001.
  */
-router.get('/logs', async (req, res) => {
+router.get('/logs', verifyToken, checkRole('admin'), async (req, res) => {
     try {
         const [rows] = await db.query(`
             SELECT l.id_log, l.fecha_accion, l.ip_usuario, l.accion, l.tabla_afectada, u.nombre_usuario, u.tipo_usuario
@@ -25,7 +26,7 @@ router.get('/logs', async (req, res) => {
  * GET /api/admin/cron-logs
  * Devuelve el historial de ejecuciones del scheduler ETL.
  */
-router.get('/cron-logs', async (req, res) => {
+router.get('/cron-logs', verifyToken, checkRole('admin'), async (req, res) => {
     try {
         const [rows] = await db.query(`
             SELECT id_log, fecha_accion, accion, registros_afectados, detalles
